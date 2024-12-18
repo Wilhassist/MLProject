@@ -18,6 +18,9 @@ unlabelled_data['label'] = 0
 # Combine the positive and unlabelled data
 data = pd.concat([positive_data, unlabelled_data], axis=0)
 
+zero_columns = data.columns[(data == 0).all()]
+data = data.drop(columns=zero_columns)
+
 # Shuffle the data
 data = data.sample(frac=1, random_state=42)
 
