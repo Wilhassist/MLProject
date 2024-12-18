@@ -5,9 +5,9 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import precision_recall_curve, auc, classification_report,roc_auc_score, precision_recall_fscore_support
 
-from resampling_data import data_downsampled
+from resampling_data import data_oversampled
 
-data = data_downsampled()
+data = data_oversampled()
 
 X = data.drop(columns=['label'])
 y = data['label']
