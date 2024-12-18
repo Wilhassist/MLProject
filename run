@@ -1,0 +1,10 @@
+#!/bin/bash
+
+MONPROG_1=./tree_based_model.py
+MONPROG_2=./parameters_tuning.py
+
+
+echo DEBUT
+Python $MONPROG_1 > tree_log
+Python $MONPROG_2 > parameters_log
+echo FIN
