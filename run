@@ -5,6 +5,6 @@ MONPROG_2=./parameters_tuning.py
 
 
 echo DEBUT
-Python $MONPROG_1 > tree_log
-Python $MONPROG_2 > parameters_log
+python $MONPROG_1 > tree_log
+python $MONPROG_2 > parameters_log
 echo FIN
