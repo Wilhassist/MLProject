@@ -7,22 +7,10 @@ from sklearn.metrics import classification_report, precision_recall_curve, auc, 
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Load the dataset
-positive_data = pd.read_csv("../data/training_pos_features.csv", index_col=0)
-unlabelled_data = pd.read_csv("../data/training_others_features.csv", index_col=0)
-
-# Label the data
-positive_data['label'] = 1
-unlabelled_data['label'] = 0
-
-# Combine the positive and unlabelled data
-data = pd.concat([positive_data, unlabelled_data], axis=0)
-
-zero_columns = data.columns[(data == 0).all()]
-data = data.drop(columns=zero_columns)
+from resampling_data import data_oversampled
 
 # Shuffle the data
-data = data.sample(frac=1, random_state=42)
+data = data_oversampled()
 
 # Split the dataset into features and labels
 X = data.drop(columns=["label"])  
@@ -45,9 +33,6 @@ fscore_scores = []
 for train_index, val_index in skf.split(X, y):
     X_train_cv, X_val_cv = X.iloc[train_index], X.iloc[val_index]
     y_train_cv, y_val_cv = y.iloc[train_index], y.iloc[val_index]
-
-    X_train_cv_cleaned = X_train_cv.dropna()  # Drop rows with NaN values
-    y_train_cv_cleaned = y_train_cv[X_train_cv_cleaned.index]
 
     # Scale the data
     scaler = StandardScaler()
@@ -92,6 +77,7 @@ print(f"F1-Score scores for each fold: {fscore_scores}")
 print(f"Mean F1-Score from cross-validation: {np.mean(fscore_scores):.4f}")
 
 # Train the model on the full dataset and save it
+scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 model.fit(X_scaled, y)
 joblib.dump(model, "logistic_regression_model.pkl")

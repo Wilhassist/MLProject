@@ -91,19 +91,26 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
     
     return balanced_data
 
-# Example usage:
 positive_data = pd.read_csv("../data/training_pos_features.csv", index_col=0)
 unlabelled_data = pd.read_csv("../data/training_others_features.csv", index_col=0)
 
-# Join datasets using downsampling
-balanced_data_downsampled = join_datasets(positive_data, unlabelled_data, sampling_type="downsample")
-print(f"Balanced dataset (downsampled): {len(balanced_data_downsampled)} samples")
+positive_data_clean = positive_data.dropna()
+unlabelled_data_clean = unlabelled_data.dropna()
 
-"""# Join datasets using oversampling
-balanced_data_oversampled = join_datasets(positive_data, unlabelled_data, sampling_type="oversample")
-print(f"Balanced dataset (oversampled): {len(balanced_data_oversampled)} samples")
+def data_downsampled():
+    balanced_data_downsampled = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="downsample")
+    print(f"Balanced dataset (downsampled): {len(balanced_data_downsampled)} samples")
+    return balanced_data_downsampled
 
-# Join datasets using hybrid sampling with a ratio of 0.5
-balanced_data_hybrid = join_datasets(positive_data, unlabelled_data, sampling_type="hybrid", ratio=0.5)
-print(f"Balanced dataset (hybrid): {len(balanced_data_hybrid)} samples")
-"""
+def data_oversampled():
+    balanced_data_oversampled = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="oversample")
+    print(f"Balanced dataset (oversampled): {len(balanced_data_oversampled)} samples")
+    return balanced_data_oversampled
+
+def data_hybridsampled(ratio = 0.5):
+    balanced_data_hybrid = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="hybrid", ratio=ratio)
+    print(f"Balanced dataset (hybrid): {len(balanced_data_hybrid)} samples")
+    return balanced_data_hybrid
+
+"""data = data_downsampled()
+data.to_csv("balanced_data.csv", index=True)"""
