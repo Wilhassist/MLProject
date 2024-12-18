@@ -46,24 +46,8 @@ for train_index, val_index in skf.split(X, y):
     X_train_cv, X_val_cv = X.iloc[train_index], X.iloc[val_index]
     y_train_cv, y_val_cv = y.iloc[train_index], y.iloc[val_index]
 
-    # Check for NaN values in the dataset
-    print("NaN values in the dataset:", X_train_cv.isna().sum().sum())  # Number of NaN values
-    print("NaN values in the labels:", y_train_cv.isna().sum())  # Number of NaN labels
-
-    # Check for infinite values in the dataset
-    print("Infinite values in the dataset:", np.isinf(X_train_cv).sum().sum())  # Number of infinite values
-    print("Infinite values in the labels:", np.isinf(y_train_cv).sum())  # Number of infinite labels
-
-    # Display columns with NaN values
-    nan_columns = X_train_cv.isna().sum()
-    columns_with_nan = nan_columns[nan_columns > 0]
-    print(columns_with_nan)
-
-    # Check rows with NaN values in each column
-    for col in X_train_cv.columns:
-        if X_train_cv[col].isna().sum() > 0:
-            print(f"Rows with NaN values in column {col}:")
-            print(X_train_cv[X_train_cv[col].isna()])
+    X_train_cv_cleaned = X_train_cv.dropna()  # Drop rows with NaN values
+    y_train_cv_cleaned = y_train_cv[X_train_cv_cleaned.index]
 
     # Scale the data
     scaler = StandardScaler()
