@@ -43,6 +43,14 @@ for train_index, val_index in skf.split(X, y):
     X_train_cv, X_val_cv = X.iloc[train_index], X.iloc[val_index]
     y_train_cv, y_val_cv = y.iloc[train_index], y.iloc[val_index]
 
+    # Check for NaN values in the dataset
+    print("NaN values in the dataset:", X_train_cv.isna().sum().sum())  # Number of NaN values
+    print("NaN values in the labels:", y_train_cv.isna().sum())  # Number of NaN labels
+
+    # Check for infinite values in the dataset
+    print("Infinite values in the dataset:", np.isinf(X_train_cv).sum().sum())  # Number of infinite values
+    print("Infinite values in the labels:", np.isinf(y_train_cv).sum())  # Number of infinite labels
+
     # Scale the data
     scaler = StandardScaler()
     X_train_cv_scaled = scaler.fit_transform(X_train_cv)
