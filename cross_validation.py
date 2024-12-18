@@ -59,6 +59,12 @@ for train_index, val_index in skf.split(X, y):
     columns_with_nan = nan_columns[nan_columns > 0]
     print(columns_with_nan)
 
+    # Check rows with NaN values in each column
+for col in X_train_cv.columns:
+    if X_train_cv[col].isna().sum() > 0:
+        print(f"Rows with NaN values in column {col}:")
+        print(X_train_cv[X_train_cv[col].isna()])
+
     # Scale the data
     scaler = StandardScaler()
     X_train_cv_scaled = scaler.fit_transform(X_train_cv)
