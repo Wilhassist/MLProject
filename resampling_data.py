@@ -70,6 +70,7 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
     :param ratio: The ratio for hybrid sampling (default 1.0)
     :return: DataFrame containing the combined and balanced dataset
     """
+
     if sampling_type == "downsample":
         unlabelled_data = downsample_majority_class(positive_data, unlabelled_data)
     elif sampling_type == "oversample":
@@ -78,6 +79,9 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
         positive_data, unlabelled_data = hybrid_sampling(positive_data, unlabelled_data, ratio)
     else:
         raise ValueError("Invalid sampling_type. Choose either 'downsample', 'oversample', or 'hybrid'.")
+
+    positive_data = positive_data.copy()
+    unlabelled_data = unlabelled_data.copy()
     
     # Add labels to both datasets
     positive_data['label'] = 1
