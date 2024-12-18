@@ -54,6 +54,11 @@ for train_index, val_index in skf.split(X, y):
     print("Infinite values in the dataset:", np.isinf(X_train_cv).sum().sum())  # Number of infinite values
     print("Infinite values in the labels:", np.isinf(y_train_cv).sum())  # Number of infinite labels
 
+    # Display columns with NaN values
+    nan_columns = X_train_cv.isna().sum()
+    columns_with_nan = nan_columns[nan_columns > 0]
+    print(columns_with_nan)
+
     # Scale the data
     scaler = StandardScaler()
     X_train_cv_scaled = scaler.fit_transform(X_train_cv)
