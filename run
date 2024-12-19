@@ -3,8 +3,8 @@
 MONPROG_1=./tree_based_model.py
 MONPROG_2=./parameters_tuning.py
 
-
+rm -rf log-NX*
 echo DEBUT
-python $MONPROG_1 > tree_log
-python $MONPROG_2 > parameters_log
+python $MONPROG_1 > tree_log 2>&1
+python $MONPROG_2 > parameters_log 2>&1
 echo FIN
