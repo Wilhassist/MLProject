@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import make_scorer, precision_recall_curve, auc
