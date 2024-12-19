@@ -3,10 +3,13 @@
 MONPROG_1=./tree_based_model.py
 MONPROG_2=./parameters_tuning.py
 
+chmod +x $MONPROG_1
+chmod +x $MONPROG_2
+
 rm -rf log-NX*
 echo DEBUT
 date
-python $MONPROG_1 > tree_log 2>&1
-python $MONPROG_2 > parameters_log 2>&1
+$MONPROG_1 > tree_log 2>&1
+$MONPROG_2 > parameters_log 2>&1
 date
 echo FIN
