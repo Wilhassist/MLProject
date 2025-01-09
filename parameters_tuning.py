@@ -4,8 +4,8 @@ from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import make_scorer, precision_recall_curve, auc
 from sklearn.preprocessing import StandardScaler
 
-from resampling_data import data_downsampled
-data = data_downsampled()
+from data_preprocessing.resampling_data import data_oversampled
+data = data_oversampled()
 
 X = data.drop(columns=['label'])
 y = data['label']
