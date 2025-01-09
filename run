@@ -6,6 +6,7 @@ MONPROG_2=./parameters_tuning.py
 chmod +x $MONPROG_1
 chmod +x $MONPROG_2
 
+rm -rf OAR.*
 rm -rf log-NX*
 echo DEBUT
 date
