@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.utils import resample
 
+from data_cleaning import clean_datasets
+
 # Function to downsample the majority class
 def downsample_majority_class(positive_data, unlabelled_data):
     """
@@ -71,12 +73,19 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
     :return: DataFrame containing the combined and balanced dataset
     """
 
+    # Clean the datasets
+    cleaning_results = clean_datasets(positive_data, unlabelled_data)
+
+    # Access cleaned data
+    positive_data_clean = cleaning_results["positive_data_clean"]
+    unlabelled_data_clean = cleaning_results["unlabelled_data_clean"]
+
     if sampling_type == "downsample":
-        unlabelled_data = downsample_majority_class(positive_data, unlabelled_data)
+        unlabelled_data = downsample_majority_class(positive_data_clean, unlabelled_data_clean)
     elif sampling_type == "oversample":
-        positive_data = oversample_minority_class(positive_data, unlabelled_data)
+        positive_data = oversample_minority_class(positive_data_clean, unlabelled_data_clean)
     elif sampling_type == "hybrid":
-        positive_data, unlabelled_data = hybrid_sampling(positive_data, unlabelled_data, ratio)
+        positive_data, unlabelled_data = hybrid_sampling(positive_data_clean, unlabelled_data_clean, ratio)
     else:
         raise ValueError("Invalid sampling_type. Choose either 'downsample', 'oversample', or 'hybrid'.")
 
@@ -95,26 +104,24 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
     
     return balanced_data
 
+# Load the datasets
 positive_data = pd.read_csv("../data/training_pos_features.csv", index_col=0)
 unlabelled_data = pd.read_csv("../data/training_others_features.csv", index_col=0)
 
-positive_data_clean = positive_data.dropna()
-unlabelled_data_clean = unlabelled_data.dropna()
-
-def data_downsampled():
-    balanced_data_downsampled = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="downsample")
+def data_downsampled(positive_data = positive_data, unlabelled_data = unlabelled_data):
+    balanced_data_downsampled = join_datasets(positive_data, unlabelled_data, sampling_type="downsample")
     print(f"Balanced dataset (downsampled): {len(balanced_data_downsampled)} samples")
     return balanced_data_downsampled
 
-def data_oversampled():
-    balanced_data_oversampled = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="oversample")
+def data_oversampled(positive_data = positive_data, unlabelled_data = unlabelled_data):
+    balanced_data_oversampled = join_datasets(positive_data, unlabelled_data, sampling_type="oversample")
     print(f"Balanced dataset (oversampled): {len(balanced_data_oversampled)} samples")
     return balanced_data_oversampled
 
-def data_hybridsampled(ratio = 0.5):
-    balanced_data_hybrid = join_datasets(positive_data_clean, unlabelled_data_clean, sampling_type="hybrid", ratio=ratio)
+def data_hybridsampled(positive_data = positive_data, unlabelled_data = unlabelled_data, ratio = 0.5):
+    balanced_data_hybrid = join_datasets(positive_data, unlabelled_data, sampling_type="hybrid", ratio=ratio)
     print(f"Balanced dataset (hybrid): {len(balanced_data_hybrid)} samples")
     return balanced_data_hybrid
 
-"""data = data_downsampled()
-data.to_csv("balanced_data.csv", index=True)"""
+data = data_downsampled()
+data.to_csv("balanced_data.csv", index=True)
