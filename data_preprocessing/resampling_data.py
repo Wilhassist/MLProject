@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.utils import resample
 
-from data_cleaning import clean_datasets
+from .data_cleaning import clean_datasets
 
 # Function to downsample the majority class
 def downsample_majority_class(positive_data, unlabelled_data):
