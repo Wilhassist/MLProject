@@ -123,5 +123,5 @@ def data_hybridsampled(positive_data = positive_data, unlabelled_data = unlabell
     print(f"Balanced dataset (hybrid): {len(balanced_data_hybrid)} samples")
     return balanced_data_hybrid
 
-data = data_downsampled()
-data.to_csv("balanced_data.csv", index=True)
+#data = data_downsampled()
+#data.to_csv("balanced_data.csv", index=True)

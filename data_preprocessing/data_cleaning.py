@@ -1,4 +1,4 @@
-import pandas
+import numpy as np
 
 def drop_missing_values(data, dataset_name="dataset"):
     """
@@ -9,7 +9,7 @@ def drop_missing_values(data, dataset_name="dataset"):
     :return: Tuple (cleaned DataFrame, percentage of rows removed)
     """
     initial_rows = len(data)
-    cleaned_data = data.dropna()
+    cleaned_data = data.replace([np.inf, -np.inf], np.nan).dropna()
     removed_rows = initial_rows - len(cleaned_data)
     percentage_removed = (removed_rows / initial_rows) * 100
 
@@ -48,6 +48,9 @@ def clean_datasets(positive_data, unlabelled_data):
     print("\nCleaning Unlabelled Dataset:")
     unlabelled_data_clean, unlabelled_missing_percentage = drop_missing_values(unlabelled_data, dataset_name="Unlabelled Dataset")
     unlabelled_data_clean, unlabelled_zero_columns = drop_zero_columns(unlabelled_data_clean, dataset_name="Unlabelled Dataset")
+
+    print(f"Max value in X_train: {positive_data_clean.max().max()}")
+    print(f"Min value in X_train: {positive_data_clean.min().min()}")
 
     return {
         "positive_data_clean": positive_data_clean,
