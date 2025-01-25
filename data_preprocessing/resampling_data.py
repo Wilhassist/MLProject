@@ -81,16 +81,16 @@ def join_datasets(positive_data, unlabelled_data, sampling_type="downsample", ra
     unlabelled_data_clean = cleaning_results["unlabelled_data_clean"]
 
     if sampling_type == "downsample":
-        unlabelled_data = downsample_majority_class(positive_data_clean, unlabelled_data_clean)
+        unlabelled_data_clean = downsample_majority_class(positive_data_clean, unlabelled_data_clean)
     elif sampling_type == "oversample":
-        positive_data = oversample_minority_class(positive_data_clean, unlabelled_data_clean)
+        positive_data_clean = oversample_minority_class(positive_data_clean, unlabelled_data_clean)
     elif sampling_type == "hybrid":
-        positive_data, unlabelled_data = hybrid_sampling(positive_data_clean, unlabelled_data_clean, ratio)
+        positive_data_clean, unlabelled_data_clean = hybrid_sampling(positive_data_clean, unlabelled_data_clean, ratio)
     else:
         raise ValueError("Invalid sampling_type. Choose either 'downsample', 'oversample', or 'hybrid'.")
 
-    positive_data = positive_data.copy()
-    unlabelled_data = unlabelled_data.copy()
+    positive_data = positive_data_clean.copy()
+    unlabelled_data = unlabelled_data_clean.copy()
     
     # Add labels to both datasets
     positive_data['label'] = 1

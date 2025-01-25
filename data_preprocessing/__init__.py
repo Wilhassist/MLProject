@@ -38,3 +38,9 @@ from .resampling_data import (
     hybrid_sampling,
     join_datasets,
 )
+
+from .data_exploration import (
+    plot_features_by_type,
+    plot_features_side_by_side,
+    gx_feature_correlation
+)

@@ -1,5 +1,3 @@
-import numpy as np
-
 def drop_missing_values(data, dataset_name="dataset"):
     """
     Drops rows with missing values and reports the percentage of rows removed.
@@ -9,7 +7,7 @@ def drop_missing_values(data, dataset_name="dataset"):
     :return: Tuple (cleaned DataFrame, percentage of rows removed)
     """
     initial_rows = len(data)
-    cleaned_data = data.replace([np.inf, -np.inf], np.nan).dropna()
+    cleaned_data = data.dropna()
     removed_rows = initial_rows - len(cleaned_data)
     percentage_removed = (removed_rows / initial_rows) * 100
 
